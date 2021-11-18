@@ -42,6 +42,7 @@ public class CampoBatalla {
             cont++;
             if (cont > 5) {
                 System.out.println(jugador.getName() + " ha perdido");
+                //listaJugadores.remove(jugador);
             }
         }
         semaphore.release(5);
