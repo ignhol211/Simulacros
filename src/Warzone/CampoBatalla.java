@@ -34,18 +34,19 @@ public class CampoBatalla {
             System.out.println("Ha entrado a la partida "+jugador.getName());
             try {
                 Thread.sleep((long) (Math.random()*(5-1))*1000);
+                Jugador.puntuacion = jugador.puntuar(jugador);
                 } catch (InterruptedException e) {
                 e.printStackTrace();}
             if(!Jugador.bonus.get()) {
                 Jugador.getBonus(jugador);
             }
             cont++;
-            if (cont > 5) {
-                System.out.println(jugador.getName() + " ha perdido");
-                //listaJugadores.remove(jugador);
+            if (cont > 5){
+                System.out.println("El "+jugador.getName()+" ha sido eliminado");
             }
         }
         semaphore.release(5);
+
     }
 
 }

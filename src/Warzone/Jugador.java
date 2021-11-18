@@ -1,15 +1,15 @@
 package Warzone;
 
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Jugador extends Thread{
 
-    private Semaphore s;
-
+    public static int puntuacion;
+    private Semaphore s = new Semaphore(15,false);
     public static AtomicBoolean bonus = new AtomicBoolean();
 
-    private int puntuacion = 0;
 
     @Override
     public void run (){
@@ -28,4 +28,15 @@ public class Jugador extends Thread{
 
     }
 
+    public int puntuar(Jugador jugador) {
+        Random r = new Random();
+        if(bonus.get())
+            return r.nextInt()*2;
+        else
+            return r.nextInt();
+    }
+
+    public static int getPuntuacion() {
+        return puntuacion;
+    }
 }

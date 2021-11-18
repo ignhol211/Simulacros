@@ -1,5 +1,9 @@
 package Warzone;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Main {
 
     static final int NUMERO_JUGADORES = 10;
@@ -12,6 +16,12 @@ public class Main {
             t.setName("Luchador " + i);
             t.start();
         }
+
+        getCampeon(CampoBatalla.listaJugadores);
+
+    }
+
+    public static void getCampeon(ArrayList<Jugador> listaJugadores){
 
     }
 
