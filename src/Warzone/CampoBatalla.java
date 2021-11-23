@@ -1,51 +1,45 @@
 package Warzone;
 
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CampoBatalla {
 
     private static final int NUM_ACCESO_SIMULTANEOS = 10;
     static Semaphore semaphore = new Semaphore(NUM_ACCESO_SIMULTANEOS, true);
 
-    static ArrayList <Jugador> listaJugadores = new ArrayList<>();
 
-    public static void entrar(Jugador jugador) {
+
+    public static void partida(Jugador jugador) {
+
+        //System.out.println("Ha entrado a la partida "+jugador.getName());
+
+        AtomicInteger cont = new AtomicInteger(0);
 
         try {
             semaphore.acquire();
-
-            listaJugadores.add(jugador);
-
-            if(listaJugadores.size() == 10)
-                partida(listaJugadores);
-
+            Thread.sleep((new Random().nextInt(5)+1)*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
 
-    public static void partida(ArrayList<Jugador> listaJugadores){
-
-        int cont = 0;
-
-        for (Jugador jugador : listaJugadores) {
-
-            System.out.println("Ha entrado a la partida "+jugador.getName());
-            try {
-                Thread.sleep((long) (Math.random()*(5-1))*1000);
-                } catch (InterruptedException e) {
-                e.printStackTrace();}
-            if(!Jugador.bonus.get()) {
-                Jugador.getBonus(jugador);
-            }
-            cont++;
-            if (cont > 5) {
-                System.out.println(jugador.getName() + " ha perdido");
-                //listaJugadores.remove(jugador);
-            }
+        if(!Jugador.bonus.get()) {
+            Jugador.getBonus(jugador);
         }
-        semaphore.release(5);
-    }
 
+        cont.getAndIncrement();
+        System.out.println("CONTROL: "+cont.get());
+        if(cont.get()<5){
+            Jugador.puntuacion = jugador.puntuar();
+        }else if (cont.get()>=5 && cont.get()<10){
+            System.out.println("El "+jugador.getName()+" ha sido eliminado");
+            semaphore.release(1);
+        }else if (cont.get()>=10){
+            Jugador.puntuacion = jugador.puntuar();
+        }
+
+    }
 }
+
+
