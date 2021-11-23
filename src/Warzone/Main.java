@@ -17,7 +17,6 @@ public class Main {
             t.start();
         }
 
-
         //getCampeon(listaJugadores);
 
     }

@@ -24,7 +24,6 @@ public class CampoBatalla {
             e.printStackTrace();
         }
 
-
         if(!Jugador.bonus.get()) {
             Jugador.getBonus(jugador);
         }
