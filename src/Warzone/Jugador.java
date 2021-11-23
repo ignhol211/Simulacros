@@ -17,6 +17,7 @@ public class Jugador extends Thread{
         CampoBatalla.partida(this);
     }
 
+
     public static void getBonus(Jugador jugador){
 
         bonus.compareAndSet(false,true);
