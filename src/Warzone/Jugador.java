@@ -5,36 +5,34 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Jugador extends Thread implements Comparable<Jugador>{
 
-    public static int puntuacion;
+    int puntuacion=0;
 
-    public static AtomicBoolean bonus = new AtomicBoolean();
+    public static AtomicBoolean bonus = new AtomicBoolean(false);
 
     @Override
     public void run (){
         CampoBatalla.partida(this);
     }
 
-    public static void getBonus(Jugador jugador){
-
-        bonus.compareAndSet(false,true);
-        System.out.println("El "+jugador.getName()+" ha conseguido el bonus");
-
+    public void getBonus(Jugador jugador){
+        if(bonus.compareAndSet(false,true)) {
+            jugador.puntuacion = jugador.puntuacion*2;
+            System.out.println("El " + jugador.getName() + " ha conseguido el bonus");
+        }
     }
 
-    public int puntuar() {
+    public static int puntuar() {
         Random r = new Random();
-        if(bonus.get())
-            return r.nextInt(100)*2;
-        else
-            return r.nextInt(100);
+        return r.nextInt(100);
     }
 
-    public static int getPuntuacion() {
+    public int getPuntuacion() {
         return puntuacion;
     }
 
     @Override
     public int compareTo(Jugador obj) {
-        return puntuacion-obj.getPuntuacion();
+        return puntuacion - obj.getPuntuacion();
     }
+
 }

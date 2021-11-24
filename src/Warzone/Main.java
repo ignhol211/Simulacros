@@ -1,7 +1,6 @@
 package Warzone;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Main {
 
@@ -9,13 +8,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i < 15; i++){
+        for (int i = 0; i < CampoBatalla.NUM_TOTAL_JUGADORES; i++){
             Jugador t = new Jugador();
             listaJugadores.add(t);
             t.setName("Luchador " + i);
             t.start();
         }
-        //getCampeon2(listaJugadores);
     }
 
     public static void getCampeon1(ArrayList<Jugador> listaJugadores){
@@ -24,20 +22,29 @@ public class Main {
 
         for (Jugador jugador : listaJugadores
         ) {
-            if (Jugador.getPuntuacion() > puntuacionMaxima) {
-                puntuacionMaxima = Jugador.getPuntuacion();
+            if (jugador.puntuacion > puntuacionMaxima) {
+                puntuacionMaxima = jugador.puntuacion;
             }
         }
         for (Jugador jugador : listaJugadores
         ) {
-            if(Jugador.getPuntuacion() == puntuacionMaxima)
-                System.out.println("El "+jugador.getName()+" ha ganado");
+            if(jugador.puntuacion == puntuacionMaxima)
+                System.out.println("El "+jugador.getName()+" ha ganado con "+ jugador.getPuntuacion());
         }
 
     }
 
     public static void getCampeon2(ArrayList<Jugador> listaJugadores){
         listaJugadores.sort(Jugador::compareTo);
-        System.out.println("El ganador es: "+ listaJugadores.get(-1).getName()+" que ha conseguido "+listaJugadores.get(-1).getPuntuacion());
+        System.out.println("El ganador es: "+ listaJugadores.get(listaJugadores.size()-1).getName()+" que ha conseguido "+ listaJugadores.get(listaJugadores.size()-1).getPuntuacion());
+        /*
+        ESTRUCTURA DE CONTROL
+        for (Jugador jugador:listaJugadores
+             ) {
+            System.out.println(jugador.getName());
+            System.out.println(jugador.puntuacion);
+            System.out.println("--------");
+        }
+         */
     }
 }
