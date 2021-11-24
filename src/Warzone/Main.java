@@ -1,11 +1,10 @@
 package Warzone;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
 
-    static final int NUMERO_JUGADORES = 10;
-    static Integer jugadoresEnCola = 0;
     static ArrayList <Jugador> listaJugadores = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -16,12 +15,10 @@ public class Main {
             t.setName("Luchador " + i);
             t.start();
         }
-
-        //getCampeon(listaJugadores);
-
+        //getCampeon2(listaJugadores);
     }
 
-    public static void getCampeon(ArrayList<Jugador> listaJugadores){
+    public static void getCampeon1(ArrayList<Jugador> listaJugadores){
 
         int puntuacionMaxima = 0;
 
@@ -37,5 +34,10 @@ public class Main {
                 System.out.println("El "+jugador.getName()+" ha ganado");
         }
 
+    }
+
+    public static void getCampeon2(ArrayList<Jugador> listaJugadores){
+        listaJugadores.sort(Jugador::compareTo);
+        System.out.println("El ganador es: "+ listaJugadores.get(-1).getName()+" que ha conseguido "+listaJugadores.get(-1).getPuntuacion());
     }
 }

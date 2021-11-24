@@ -9,13 +9,11 @@ public class CampoBatalla {
     private static final int NUM_ACCESO_SIMULTANEOS = 10;
     static Semaphore semaphore = new Semaphore(NUM_ACCESO_SIMULTANEOS, true);
 
-
+    static AtomicInteger cont = new AtomicInteger(0);
 
     public static void partida(Jugador jugador) {
 
         //System.out.println("Ha entrado a la partida "+jugador.getName());
-
-        AtomicInteger cont = new AtomicInteger(0);
 
         try {
             semaphore.acquire();
@@ -27,18 +25,21 @@ public class CampoBatalla {
         if(!Jugador.bonus.get()) {
             Jugador.getBonus(jugador);
         }
+        puntuarOeliminado(jugador);
+    }
 
+    public static synchronized void puntuarOeliminado(Jugador jugador){
         cont.getAndIncrement();
-        System.out.println("CONTROL: "+cont.get());
         if(cont.get()<5){
             Jugador.puntuacion = jugador.puntuar();
+            System.out.println("El "+jugador.getName()+" ha conseguido "+Jugador.puntuacion+" puntos");
         }else if (cont.get()>=5 && cont.get()<10){
             System.out.println("El "+jugador.getName()+" ha sido eliminado");
             semaphore.release(1);
         }else if (cont.get()>=10){
             Jugador.puntuacion = jugador.puntuar();
+            System.out.println("El "+jugador.getName()+" ha conseguido "+Jugador.puntuacion+" puntos");
         }
-
     }
 }
 

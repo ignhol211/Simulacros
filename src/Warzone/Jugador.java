@@ -1,16 +1,13 @@
 package Warzone;
 
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Jugador extends Thread{
+public class Jugador extends Thread implements Comparable<Jugador>{
 
     public static int puntuacion;
 
-    static Semaphore s = new Semaphore(15,false);
     public static AtomicBoolean bonus = new AtomicBoolean();
-
 
     @Override
     public void run (){
@@ -27,13 +24,17 @@ public class Jugador extends Thread{
     public int puntuar() {
         Random r = new Random();
         if(bonus.get())
-            return r.nextInt()*2;
+            return r.nextInt(100)*2;
         else
-            return r.nextInt();
+            return r.nextInt(100);
     }
 
     public static int getPuntuacion() {
         return puntuacion;
     }
 
+    @Override
+    public int compareTo(Jugador obj) {
+        return puntuacion-obj.getPuntuacion();
+    }
 }
