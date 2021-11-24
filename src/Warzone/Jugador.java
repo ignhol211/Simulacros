@@ -6,24 +6,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Jugador extends Thread implements Comparable<Jugador>{
 
     int puntuacion=0;
-
-    public static AtomicBoolean bonus = new AtomicBoolean(false);
+    boolean bonus = false;
 
     @Override
     public void run (){
         CampoBatalla.partida(this);
     }
 
-    public void getBonus(Jugador jugador){
-        if(bonus.compareAndSet(false,true)) {
-            jugador.puntuacion = jugador.puntuacion*2;
-            System.out.println("El " + jugador.getName() + " ha conseguido el bonus");
-        }
+    public void getBonus(){
+        bonus = true;
+        System.out.println("El " + getName() + " ha conseguido el bonus");
     }
 
-    public static int puntuar() {
+    public void puntuar() {
         Random r = new Random();
-        return r.nextInt(100);
+        puntuacion = r.nextInt(100);
+        if (bonus)
+            puntuacion *= 2;
     }
 
     public int getPuntuacion() {
