@@ -18,6 +18,7 @@ public class Main {
 
     public static void getCampeon1(ArrayList<Jugador> listaJugadores){
 
+
         int puntuacionMaxima = 0;
 
         for (Jugador jugador : listaJugadores
